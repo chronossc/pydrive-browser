@@ -30,7 +30,6 @@ class PydriveBrowser(object):
         return file_list
 
     def get(self, file_ids, fields=None):
-
         self._pydrive.auth.Authorize()
         files = self._pydrive.auth.service.files()
         batch_response = OrderedDict()
@@ -55,7 +54,7 @@ class PydriveBrowser(object):
         batch_request.execute()
         return batch_response
 
-    def share(self, file_ids, emails, callback=None):
+    def share(self, file_ids, emails, role='reader', callback=None):
         """
         Share a list of files to a list of e-mails.
         """
@@ -92,7 +91,7 @@ class PydriveBrowser(object):
                     'body': {
                         'value': email,
                         'type': 'user',
-                        'role': 'writer'
+                        'role': role
                     }
                 }
                 batch_id = 'share__%s__%s' % (file_id, uuid4())
